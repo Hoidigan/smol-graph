@@ -11,7 +11,7 @@ This crate also provides a [`prelude`][prelude] that exports all of the
 types used in this crate: [`Graph`][Graph], [`NodeIndex`][NodeIndex], 
 and[`EdgeIndex`][EdgeIndex].
 
-[Uuid]: https://docs.rs/uuid/*/uuid/
+[Uuid]: https://docs.rs/uuid/
 [prelude]: https://docs.rs/smol-graph/*/smol_graph/prelude/index.html
 [Graph]: https://docs.rs/smol-graph/*/smol_graph/struct.Graph.html
 [NodeIndex]: https://docs.rs/smol-graph/*/smol_graph/struct.NodeIndex.html
