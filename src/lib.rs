@@ -11,20 +11,36 @@ use uuid::Uuid;
 ///
 /// The graph does provide convenience functions for 
 /// some simple operations over its data.
-///
-/// Along with that, it provides some algorithms for them as well.
-pub struct Graph<Node, Edge> {
+#[derive(Debug)]
+pub struct Graph<Node, EdgeData> {
     pub nodes: HashMap<NodeIndex, Node>,
-    pub edges: HashMap<EdgeIndex, ((NodeIndex, NodeIndex), Edge)>,
+    pub edges: HashMap<EdgeIndex, Edge<EdgeData>>,
+}
+
+/// A struct representing an edge between two nodes.
+#[derive(Debug, Clone)]
+pub struct Edge<Data> {
+    pub nodes: (NodeIndex, NodeIndex),
+    pub data: Data,
+}
+
+impl<Data> Edge<Data> {
+    /// Create a new edge with nodes and data.
+    pub fn new(nodes: (NodeIndex, NodeIndex), data: Data) -> Edge<Data> {
+        Edge {
+            nodes,
+            data,
+        }
+    }
 }
 
 /// An index pointing to a node in the graph.
-#[derive(Clone, Copy, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[derive(Debug, Clone, Copy, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct NodeIndex(Uuid);
 
 /// An index pointing to an edge in the graph.
 
-#[derive(Clone, Copy, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[derive(Debug, Clone, Copy, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct EdgeIndex(Uuid);
 
 impl NodeIndex {
@@ -41,7 +57,7 @@ impl EdgeIndex {
     }
 }
 
-impl<N, E> Graph<N, E> {
+impl<Node, EdgeData> Graph<Node, EdgeData> {
     /// Create a new graph with empty nodes and edges.
     /// 
     /// To initialize with capacity or other pre-defined
@@ -66,17 +82,32 @@ impl<N, E> Graph<N, E> {
     }
 
     /// A convenience function to generate an index an insert an edge.
-    pub fn edge(&mut self, nodes: (NodeIndex, NodeIndex), data: E) -> EdgeIndex {
+    pub fn edge(&mut self, edge: Edge<EdgeData>) -> EdgeIndex {
         let idx = EdgeIndex::new();
-        self.edges.insert(idx, (nodes, data));
+        self.edges.insert(idx, edge);
         idx
     }
 
+    /// Attempt to remove an edge from this graph, returning it if it 
+    /// existed.
+    pub fn r_edge(&mut self, idx: EdgeIndex) -> Option<Edge<EdgeData>> {
+        self.edges.remove(&idx)
+    }
+
     /// A convenience function to generate an index an insert a node.
-    pub fn node(&mut self, node: N) -> NodeIndex {
+    pub fn node(&mut self, node: Node) -> NodeIndex {
         let idx = NodeIndex::new();
         self.nodes.insert(idx, node);
         idx
+    }
+
+    /// Attempt to remove a node from this graph, returning it if it 
+    /// existed.
+    ///
+    /// Note that this will *not* check if any edges still have the node
+    /// referenced.
+    pub fn r_node(&mut self, idx: NodeIndex) -> Option<Node> {
+        self.nodes.remove(&idx)
     }
 }
 
@@ -85,5 +116,6 @@ pub mod prelude {
         Graph,
         NodeIndex,
         EdgeIndex,
+        Edge,
     };
 }
