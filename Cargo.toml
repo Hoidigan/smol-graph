@@ -1,10 +1,10 @@
 [package]
 name = "smol-graph"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2018"
 readme = "README.md"
 license = "MIT OR Apache-2.0"
-# documentation = "https://docs.rs/smol-graph/0.1.0/smol_graph/"
+documentation = "https://docs.rs/smol-graph/"
 repository = "https://github.com/Hoidigan/smol-graph"
 homepage = "https://github.com/Hoidigan/smol-graph"
 description = "A simple and to-the-point Rust graph implementation."
