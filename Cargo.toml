@@ -2,6 +2,11 @@
 name = "smol-graph"
 version = "0.1.0"
 edition = "2018"
+readme = "README.md"
+license = "MIT or Apache-2.0"
+repository = "https://github.com/Hoidigan/smol-graph"
+homepage = "https://github.com/Hoidigan/smol-graph"
+description = "A simple and to-the-point Rust graph implementation."
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
