@@ -64,6 +64,20 @@ impl<N, E> Graph<N, E> {
     pub fn edges<'a>(&'a self) -> impl Iterator + 'a {
         self.edges.iter()
     }
+
+    /// A convenience function to generate an index an insert an edge.
+    pub fn edge(&mut self, nodes: (NodeIndex, NodeIndex), data: E) -> EdgeIndex {
+        let idx = EdgeIndex::new();
+        self.edges.insert(idx, (nodes, data));
+        idx
+    }
+
+    /// A convenience function to generate an index an insert a node.
+    pub fn node(&mut self, node: N) -> NodeIndex {
+        let idx = NodeIndex::new();
+        self.nodes.insert(idx, node);
+        idx
+    }
 }
 
 pub mod prelude {
