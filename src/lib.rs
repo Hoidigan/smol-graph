@@ -39,7 +39,6 @@ impl<Data> Edge<Data> {
 pub struct NodeIndex(Uuid);
 
 /// An index pointing to an edge in the graph.
-
 #[derive(Debug, Clone, Copy, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct EdgeIndex(Uuid);
 
@@ -81,7 +80,7 @@ impl<Node, EdgeData> Graph<Node, EdgeData> {
         self.edges.iter()
     }
 
-    /// A convenience function to generate an index an insert an edge.
+    /// A convenience function to insert an edge at a new index.
     pub fn edge(&mut self, edge: Edge<EdgeData>) -> EdgeIndex {
         let idx = EdgeIndex::new();
         self.edges.insert(idx, edge);
@@ -94,7 +93,7 @@ impl<Node, EdgeData> Graph<Node, EdgeData> {
         self.edges.remove(&idx)
     }
 
-    /// A convenience function to generate an index an insert a node.
+    /// A convenience function to insert a node at a new index.
     pub fn node(&mut self, node: Node) -> NodeIndex {
         let idx = NodeIndex::new();
         self.nodes.insert(idx, node);
